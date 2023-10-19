@@ -26,7 +26,6 @@ const AuthProvider: React.FC<ProviderProps> = ({ children }) => {
     }, []);
 
     const onAuthStateChanged = (user: any) => {
-        console.log('onAuthStateChangedd', user)
         setUser(user);
     };
 

@@ -1,8 +1,6 @@
 export default interface IUser {
-    id: string;
+    id: number;
     username: string;
-    name: string;
-    description: string;
-    followers_count: number;
-    joined_at: string;
+    displayName: string;
+    email: string;
 }

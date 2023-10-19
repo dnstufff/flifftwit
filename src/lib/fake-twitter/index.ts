@@ -5,7 +5,9 @@ interface IUser {
     email: string;
 }
 
-const auth = () => {
+let instance: any = null;
+
+const createInstance = () => {
     return ({
         users: {
             johndoe: {
@@ -39,6 +41,7 @@ const auth = () => {
             const promise = new Promise<void>((resolve, reject) => {
                 setTimeout(() => {
                     if (this.users[username]) {
+                        console.log(this.callback)
                         this.currentUser = this.users[username];
                         this.callback && this.callback(this.currentUser);
                         resolve();
@@ -54,6 +57,7 @@ const auth = () => {
 
         async signOut() {
             this.currentUser = null;
+            this.callback && this.callback(null);
         },
 
         onUnsubscribe() {
@@ -65,6 +69,13 @@ const auth = () => {
             return this.onUnsubscribe;
         },
     });
+}
+
+const auth = () => {
+    if (!instance) {
+        instance = createInstance();
+    }
+    return instance;
 }
 
 export default auth;

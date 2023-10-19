@@ -5,7 +5,10 @@ import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import DetailsScreen from './screens/DetailsScreen';
-import { RootStackParamList, RootTabsParamList, ScreenNames } from "./screens/types";
+import { RootStackParamList, RootTabsParamList, ScreenNames } from "./models/navigation";
+import { useContext } from "react";
+import IAuthContext from "./models/IAuthContext";
+import { AuthContext } from "./contexts/AuthContext";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -27,9 +30,9 @@ const HomeNavigator = () => (
 );
 
 export default function Root() {
-    const isLoggedIn = false;
+    const { user } = useContext<IAuthContext>(AuthContext);
 
-    if (!isLoggedIn) {
+    if (!user) {
         return (
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name={ScreenNames.Login} component={LoginScreen} />

@@ -9,12 +9,13 @@ import {
 import { AuthContext } from '../contexts/AuthContext';
 import IAuthContext from '../models/IAuthContext';
 import Loading from '../components/Loading';
+import { useLoading } from '../contexts/LoadingContext';
 
 const LoginScreen: React.FC = ({ navigation }: any) => {
     const [username, onUsernameChange] = useState<string>('');
     const [error, setError] = useState<Error | null>(null);
     const { login, user } = useContext<IAuthContext>(AuthContext);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const { showLoading, hideLoading, isLoading } = useLoading();
 
     useEffect(() => {
         if (user && !error) {
@@ -23,18 +24,19 @@ const LoginScreen: React.FC = ({ navigation }: any) => {
     }, [user, error]);
 
     const handleLogin = async (username: string) => {
-        setIsLoading(true);
+        setError(null);
+        showLoading();
         if (login) {
             await login(username).catch((e: Error) => {
                 setError(e);
             });
-            setIsLoading(false);
+            hideLoading();
         }
     };
 
-    return (isLoading
-        ? <Loading />
-        : <View style={styles.container}>
+    return (
+        <View style={styles.container}>
+            {isLoading && <Loading />}
             {error && <Text>{error.message}</Text>}
             <TextInput
                 style={styles.input}

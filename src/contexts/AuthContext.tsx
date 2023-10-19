@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import auth from '../lib/fake-twitter';
+import fakeTwitter from '../lib/fake-twitter';
 import IAuthContext from '../models/IAuthContext';
 import IUser from '../models/IUser';
 
@@ -21,7 +21,7 @@ const AuthProvider: React.FC<ProviderProps> = ({ children }) => {
     const [user, setUser] = useState<IUser | null>(null);
 
     useEffect(() => {
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        const subscriber = fakeTwitter().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
     }, []);
 
@@ -30,11 +30,11 @@ const AuthProvider: React.FC<ProviderProps> = ({ children }) => {
     };
 
     const login = async (username: string) => {
-        return auth().signInWithUsername(username)
+        return fakeTwitter().signInWithUsername(username)
     };
 
     const signOut = () => {
-        return auth().signOut();
+        return fakeTwitter().signOut();
     };
 
     return (

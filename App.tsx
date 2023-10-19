@@ -5,17 +5,20 @@ import { NavigationContainer, useNavigationContainerRef } from "@react-navigatio
 import { AuthProvider } from './src/contexts/AuthContext';
 import RootNavigator from "./src/RootNavigator";
 import { LoadingProvider } from './src/contexts/LoadingContext';
+import { TweetsProvider } from './src/contexts/TweetsContext';
 
 const App: React.FC = () => {
     const navigationRef = useNavigationContainerRef();
 
     return (
         <AuthProvider>
-            <NavigationContainer ref={navigationRef}>
-                <LoadingProvider>
-                    <RootNavigator />
-                </LoadingProvider>
-            </NavigationContainer>
+            <TweetsProvider>
+                <NavigationContainer ref={navigationRef}>
+                    <LoadingProvider>
+                        <RootNavigator />
+                    </LoadingProvider>
+                </NavigationContainer>
+            </TweetsProvider>
         </AuthProvider>
     );
 };

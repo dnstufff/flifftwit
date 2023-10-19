@@ -1,8 +1,13 @@
 interface IUser {
-    id: number;
+    id: string;
     username: string;
     displayName: string;
     email: string;
+}
+
+interface ITweet {
+    id: string;
+    text: string;
 }
 
 let instance: any = null;
@@ -37,18 +42,31 @@ const createInstance = () => {
 
         callback: null as Function | null,
 
-        async signInWithUsername(username: string) {
+        async signInWithUsername(userId: string) {
             const promise = new Promise<void>((resolve, reject) => {
                 setTimeout(() => {
-                    if (this.users[username]) {
-                        console.log(this.callback)
-                        this.currentUser = this.users[username];
+                    if (this.users[userId]) {
+                        this.currentUser = this.users[userId];
                         this.callback && this.callback(this.currentUser);
                         resolve();
                     } else {
                         this.callback && this.callback(null);
                         reject(new Error('User not found'));
                     }
+                }, 1000);
+            })
+
+            return promise;
+        },
+
+        async getTweetsForUser(userId: string, start: number = 1, limit: number = 20) {
+            const promise = new Promise<any>((resolve, reject) => {
+                setTimeout(() => {
+                    const tweets = [];
+                    for (let i = 1; i < start + limit; i++) {
+                        tweets.push({ id: i, text: `Tweet ${i} from ${userId}` });
+                    }
+                    resolve(tweets);
                 }, 1000);
             })
 
@@ -71,11 +89,11 @@ const createInstance = () => {
     });
 }
 
-const auth = () => {
+const fakeTwitter = () => {
     if (!instance) {
         instance = createInstance();
     }
     return instance;
 }
 
-export default auth;
+export default fakeTwitter;

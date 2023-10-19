@@ -1,5 +1,4 @@
-export default interface Tweet {
+export default interface ITweet {
     id: string;
     text: string;
-    created_at: string;
 }

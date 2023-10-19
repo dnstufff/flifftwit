@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React from 'react';
 import {
     View,
     StyleSheet,
@@ -6,27 +6,24 @@ import {
     Pressable,
 } from 'react-native';
 import { Palette } from '../constants/Palette';
-import ITweetsContext from '../models/ITweetsContext';
-import { TweetsContext } from '../contexts/TweetsContext';
 import ITweet from '../models/ITweet';
-import IAuthContext from '../models/IAuthContext';
-import { AuthContext } from '../contexts/AuthContext';
+import { useNavigation } from '@react-navigation/native';
+import { ScreenNames } from '../models/navigation';
 
 interface IProps {
     data: ITweet;
 }
 
-const CARD_CONTENT_HEIGHT = 40;
-
 const TweetCard: React.FC<IProps> = ({ data }) => {
     const { text } = data;
+    const navigation = useNavigation();
 
     return (
         <View style={[styles.container, styles.shadowStyle]}>
             <View>
                 <Text style={styles.content}>{text}</Text>
             </View>
-            <Pressable onPress={() => console.log('pressed')}>
+            <Pressable onPress={() => { navigation.navigate(ScreenNames.Details, { data, title: `Tweet #${data.id}` })}}>
                 <Text style={styles.viewMore}>View Tweet...</Text>
             </Pressable>
         </View>
@@ -48,23 +45,12 @@ const styles = StyleSheet.create({
         elevation: 5,
         borderRadius: 8,
     },
-    limitHeight: {
-        maxHeight: CARD_CONTENT_HEIGHT,
-        overflow: 'hidden'
-    },
-    date: {
-        color: Palette.primaryDark,
-    },
     content: {
         color: Palette.secondaryDark,
     },
     viewMore: {
         fontWeight: '600',
         color: Palette.primaryDark,
-    },
-    TweetHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
     },
 });
 

@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import {
     View,
-    Button,
-    ScrollView,
     StyleSheet,
     FlatList,
 } from 'react-native';
@@ -43,12 +41,11 @@ const HomeScreen: React.FC = ({ navigation }: any) => {
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={tweets}
-                renderItem={({ item }) => <View style={styles.notesContainer}><TweetCard data={item} key={item.id} /></View>}
+                renderItem={({ item }) => <View style={styles.tweetsContainer}><TweetCard data={item} key={item.id} /></View>}
                 keyExtractor={item => item.id}
                 onEndReached={() => tweets && loadTweets(1, tweets.length + 20)}
             />
             {isLoading && <Loading />}
-            <Button title="Sign Out" onPress={() => handleSignOut()} />
         </SafeAreaView>
     );
 };
@@ -56,10 +53,9 @@ const HomeScreen: React.FC = ({ navigation }: any) => {
 const styles = StyleSheet.create({
     container: {
         minHeight: '100%',
-        paddingHorizontal: 24,
-        paddingBottom: 40,
     },
-    notesContainer: {
+    tweetsContainer: {
+        paddingHorizontal: 24,
         marginVertical: 8
     },
 });

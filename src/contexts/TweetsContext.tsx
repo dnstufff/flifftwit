@@ -1,6 +1,6 @@
 import React, { createContext, useState, ReactNode } from 'react';
 import ITweetsContext from '../models/ITweetsContext';
-import ITweet from '../models/ITweet';
+import Tweet from '../models/ITweet';
 import fakeTwitter from '../lib/fake-twitter';
 
 interface ProviderProps {
@@ -17,12 +17,12 @@ const TweetsContext = createContext<ITweetsContext>(initialContextState);
 const { Provider } = TweetsContext;
 
 const TweetsProvider: React.FC<ProviderProps> = ({ children }) => {
-    const [tweets, setTweets] = useState<ITweet[] | null>(null);
+    const [tweets, setTweets] = useState<Tweet[] | null>(null);
 
     const getTweetsForUser = (userId: string, start: number, limit: number) => {
         return fakeTwitter()
             .getTweetsForUser(userId, start, limit)
-            .then((tweets: Array<ITweet>) => {
+            .then((tweets: Array<Tweet>) => {
                 setTweets(tweets);
             });
     };

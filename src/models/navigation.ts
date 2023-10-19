@@ -8,7 +8,7 @@ enum ScreenNames {
 
 type RootStackParamList = {
     [ScreenNames.Home]: undefined;
-    [ScreenNames.Details]: undefined;
+    [ScreenNames.Details]: { data: object, title: string | null };
     [ScreenNames.Login]: undefined;
 };
 

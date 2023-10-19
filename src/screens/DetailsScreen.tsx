@@ -4,11 +4,12 @@ import {
     Text,
 } from 'react-native';
 
-const DetailsScreen: React.FC = ({ navigation }: any) => {
+const DetailsScreen: React.FC = ({ route, navigation }: any) => {
+    const { data } = route.params;
 
     return (
         <View>
-            <Text>Dummy Details</Text>
+            <Text style={{ padding: 24}}>{data?.text}</Text>
         </View>
     );
 };

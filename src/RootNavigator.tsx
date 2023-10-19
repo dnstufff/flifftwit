@@ -1,5 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faHouse } from '@fortawesome/free-solid-svg-icons/faHouse'
 
 import HomeScreen from './screens/HomeScreen';
 import LoginScreen from './screens/LoginScreen';
@@ -9,6 +11,7 @@ import { RootStackParamList, RootTabsParamList, ScreenNames } from "./models/nav
 import { useContext } from "react";
 import IAuthContext from "./models/IAuthContext";
 import { AuthContext } from "./contexts/AuthContext";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -24,7 +27,7 @@ const HomeNavigator = () => (
         <Stack.Screen
             name={ScreenNames.Details}
             component={DetailsScreen}
-            options={{ title: "Details" }}
+            options={({ route }) => ({ title: route.params.title || 'Details'})}
         />
     </Stack.Navigator>
 );
@@ -42,8 +45,23 @@ export default function Root() {
 
     return (
         <Tab.Navigator>
-            <Tab.Screen name={ScreenNames.HomeNavigator} component={HomeNavigator} options={{ title: "Home", headerShown: false }} />
-            <Tab.Screen name={ScreenNames.Settings} component={SettingsScreen} options={{ title: "Settings" }} />
+            <Tab.Screen 
+                name={ScreenNames.HomeNavigator}
+                component={HomeNavigator}
+                options={{
+                    title: "Home",
+                    headerShown: false,
+                    tabBarIcon: () => (<FontAwesomeIcon icon={faHouse} />)
+                }}
+            />
+            <Tab.Screen
+                name={ScreenNames.Settings}
+                component={SettingsScreen}
+                options={{
+                    title: "Settings",
+                    tabBarIcon: () => (<FontAwesomeIcon icon={faCog} />)
+                }}
+            />
         </Tab.Navigator>
     );
 }

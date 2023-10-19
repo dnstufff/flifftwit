@@ -1,13 +1,8 @@
 interface IUser {
     id: string;
     username: string;
-    displayName: string;
+    nickname: string;
     email: string;
-}
-
-interface ITweet {
-    id: string;
-    text: string;
 }
 
 let instance: any = null;
@@ -18,25 +13,15 @@ const createInstance = () => {
             johndoe: {
                 id: 'user1',
                 username: 'johndoe',
-                displayName: 'John Doe',
+                nickname: 'John Doe',
                 email: 'johndoe@example.com',
             },
             janesmith: {
                 id: 'user2',
                 username: 'janesmith',
-                displayName: 'Jane Smith',
+                nickname: 'Jane Smith',
                 email: 'janesmith@example.com',
             },
-        },
-        userTweets: {
-            user1: [
-                { id: '1', text: 'My first tweet!' },
-                { id: '2', text: 'Hello, Twitter!' },
-            ],
-            user2: [
-                { id: '3', text: 'Tweeting from user2' },
-                { id: '4', text: 'Twitter is fun!' },
-            ],
         },
         currentUser: null as IUser | null,
 
